@@ -1,21 +1,34 @@
 const Vol = new Tone.Volume().toDestination();
 Vol.volume.value = 5;	
-const Sampler = new Tone.Sampler({
+const NylonGuitar_Sampler = new Tone.Sampler({
 		urls: {
-			"C4": "C4.mp3",
+			"C#4": "Cs4.mp3",
 			"D#4": "Ds4.mp3",
 			"F#4": "Fs4.mp3",
 			"A4": "A4.mp3",
 		},
 		release: 1,
-		baseUrl: "https://tonejs.github.io/audio/salamander/",
+		//baseUrl: "https://tonejs.github.io/audio/salamander/",
+		baseUrl: "samples/nylon_guitar",
 	}).connect(Vol)
 	.toDestination();
 
+const Piano_Sampler = new Tone.Sampler({
+		urls: {
+			"C#4": "Cs4.mp3",
+			"D#4": "Ds4.mp3",
+			"F#4": "Fs4.mp3",
+			"A4": "A4.mp3",
+		},
+		release: 1,
+		//baseUrl: "https://tonejs.github.io/audio/salamander/",
+		baseUrl: "samples/piano",
+	}).connect(Vol)
+	.toDestination();
 
+let sampler = Piano_Sampler;
 
 const NOTES = ['C','C#/Db','D','D#/Eb','E','F','F#/Gb','G','G#/Ab','A','A#/Bb','B'];
-
 
 const MAJOR = [1,3,4.5];
 const MINOR = [1,2.5,4.5];
@@ -45,7 +58,7 @@ const M7B5 = [1,2.5,4,6.5];
 
 function playSound(keys, delay){
 	Tone.loaded().then(() => {
-		Sampler.triggerAttackRelease(keys, delay);
+		sampler.triggerAttackRelease(keys, delay);
 	})
 }
 
