@@ -3,6 +3,9 @@
     "description": "Chord player for HOPAMVIET. Contact us at: mnest2409@yahoo.com or hungtran9955@gmail.com",
     "version": "1.0",
     "manifest_version": 3,
+    "background": {
+      "service_worker": "background.js"
+    },
     "permissions": ["storage"],
     "action": {
         "default_popup": "popup.html",
@@ -11,7 +14,8 @@
     "content_scripts": [
         {
           "matches": ["https://hopamviet.vn/*"],
-          "js": ["js/jquery.min.js", "js/Tone.js", "js/definitions.js","contentScript.js"]
+          "js": ["js/jquery.min.js", "js/Tone.js", "js/definitions.js","contentScript.js"],
+          "css": ["content.css"]
         }
     ]
   }
