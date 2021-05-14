@@ -8,6 +8,18 @@
       <button class="button button-inline instrument-type" data-instrument="pinano" id="instrument-default">Pinano</button>
       <button class="button button-inline instrument-type" data-instrument="guitar">Guitar</button>
     </div>
-    <script src="popup.js"></script>
+    <div class="container">
+      <form>
+          <label>
+              <input type="radio" name="tone-type" value="combination"  />
+              <span>combination</span>
+          </label>
+          <label>
+              <input type="radio" name="tone-type" value="sequence" checked/>
+              <span>sequence</span>
+          </label>
+      </form>
+    </div>
+    <script defer src="popup.js"></script>
   </body>
 </html>
