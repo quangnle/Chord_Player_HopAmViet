@@ -1,0 +1,47 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+
+.button {
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  height: 40px;
+  padding: 0 14px;
+  margin: 0 5px;
+  border-radius: 5px;
+  box-shadow: inset 0 -3px 0 0 rgb(0 0 0 / 15%);
+  font-size: 18px;
+  line-height: 37px;
+  transition-property: background-color;
+  transition-duration: 0.2s;
+  transition-timing-function: linear;
+  background: #fafafa;
+  color: #222222;
+}
+
+.button:active {
+  box-shadow: none !important;
+}
+
+.button:hover{
+  text-decoration: none;
+  background: #e6e6e6;
+  color: #222222;
+}
+
+.button-inline {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+body, html, .button-wrapper{
+  border-radius: 20px;
+}
+
+.button-wrapper{
+  display: flex;
+  padding: 20px;
+}

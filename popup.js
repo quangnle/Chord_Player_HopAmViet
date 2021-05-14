@@ -1,24 +1,37 @@
-// Initialize button with user's preferred color
-let changeColor = document.getElementById("changeColor");
 
-chrome.storage.sync.get("color", ({ color }) => {
-  changeColor.style.backgroundColor = color;
-});
+bindEventToInstrumentElement();
+chooseInstrument();
 
-// When the button is clicked, inject setPageBackgroundColor into current page
-changeColor.addEventListener("click", async () => {
-  let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+function resetInstrument(){
+  chrome.storage.sync.set({ instrument: '' });
 
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    function: setPageBackgroundColor,
-  });
-});
+  let instruments = document.getElementsByClassName("instrument-type");
+  let backgroundColor = '#fff';
+  let color = '#000';
+  for (let index = 0; index < instruments.length; index++) {
+    const instrum = instruments[index];
+    instrum.style.backgroundColor = backgroundColor;
+    instrum.style.color = color;
+  }
+}
 
-// The body of this function will be executed as a content script inside the
-// current page
-function setPageBackgroundColor() {
-  chrome.storage.sync.get("color", ({ color }) => {
-    document.body.style.backgroundColor = color;
-  });
+function chooseInstrument(instrumentEle){
+  let backgroundColor = '#0D5E4D';
+  let color = '#fff';
+  if(!instrumentEle) instrumentEle = document.getElementById("instrument-default")
+  chrome.storage.sync.set({ instrument: instrumentEle.dataset.instrument });
+  instrumentEle.style.backgroundColor = backgroundColor;
+  instrumentEle.style.color = color;
+}
+
+function bindEventToInstrumentElement(){
+  let instruments = document.getElementsByClassName("instrument-type");
+  for (let index = 0; index < instruments.length; index++) {
+    const itm = instruments[index];
+    
+    itm.addEventListener("click", async (e) => {
+      resetInstrument();
+      chooseInstrument(itm);
+    });
+  }
 }
