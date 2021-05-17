@@ -17,5 +17,11 @@
           "js": ["js/jquery.min.js", "js/Tone.js", "js/definitions.js","contentScript.js"],
           "css": ["content.css"]
         }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [ "/samples/*" ],
+        "matches": [ "https://hopamviet.vn/*" ]
+      }
     ]
   }

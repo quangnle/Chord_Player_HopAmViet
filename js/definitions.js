@@ -2,27 +2,27 @@ const Vol = new Tone.Volume().toDestination();
 Vol.volume.value = 5;	
 const NylonGuitar_Sampler = new Tone.Sampler({
 		urls: {
-			"C#4": "Cs4.mp3",
-			"D#4": "Ds4.mp3",
-			"F#4": "Fs4.mp3",
-			"A4": "A4.mp3",
+			"C#4": "/Cs4.mp3",
+			"D#4": "/Ds4.mp3",
+			"F#4": "/Fs4.mp3",
+			"A4": "/A4.mp3",
 		},
 		release: 1,
 		//baseUrl: "https://tonejs.github.io/audio/salamander/",
-		baseUrl: "samples/nylon_guitar",
+		baseUrl: chrome.runtime.getURL("samples/guitar-nylon"),
 	}).connect(Vol)
 	.toDestination();
 
 const Piano_Sampler = new Tone.Sampler({
 		urls: {
-			"C#4": "Cs4.mp3",
-			"D#4": "Ds4.mp3",
-			"F#4": "Fs4.mp3",
-			"A4": "A4.mp3",
+			"C#4": "/Cs4.mp3",
+			"D#4": "/Ds4.mp3",
+			"F#4": "/Fs4.mp3",
+			"A4": "/A4.mp3",
 		},
 		release: 1,
 		//baseUrl: "https://tonejs.github.io/audio/salamander/",
-		baseUrl: "samples/piano",
+		baseUrl:  chrome.runtime.getURL("samples/piano"), 
 	}).connect(Vol)
 	.toDestination();
 
