@@ -67,6 +67,17 @@ function playChord(name, delay){
 	playSound(keys, delay);
 }
 
+function playChordSeq(name, delay){
+	let keys = getKeysFromChord(name);
+	console.log(keys);
+	let now =  Tone.now(); 
+	for	(let i=0; i< keys.length; i++){
+		Tone.loaded().then(() => {
+			Sampler.triggerAttackRelease(keys[i], delay, now + i * 0.25);
+		})
+	}
+}
+
 function getKeyPosition(name){
 	name = name.split('/')[0];
 	for (let i = 0; i < NOTES.length; i++){
@@ -142,8 +153,13 @@ function getKeysFromChord(name){
 	}
 	
 	let notes = [];	
+	let oct =  3;
 	for (let i = 0; i < seq.length; i++){
-		let note = transpose(root, seq[i] - 1).split('/')[0] + '4';
+		let note = transpose(root, seq[i] - 1).split('/')[0];
+		if (getKeyPosition(root) > getKeyPosition(note)) {
+			oct = 4;
+		}
+		note = note + oct;
 		notes.push(note);
 	}
 	

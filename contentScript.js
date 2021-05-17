@@ -7,7 +7,7 @@ $(document).ready(function(){
         chrome.storage.sync.get("toneData", ({toneData}) => {
             let currentInstrument = toneData.instrument;
             let currentToneType = toneData.toneType;
-            debugger
+            //debugger
             
             // TODO: choose instrument here
             if (elementMouseIsOver.className == "chord") {
