@@ -54,7 +54,7 @@
 body {
   font-family: "Inter", sans-serif;
   color: #000021;
-  background-color: #e6e6ef; 
+  /* background-color: #e6e6ef;  */
 }
 
 form {
@@ -108,3 +108,21 @@ label {
   align-items: center;
   padding: 20px; }
 /*radio - START*/
+
+.icon-container{
+  display: flex;
+  flex-direction: column;
+  width: 80;
+  justify-content: center;
+}
+
+.icon-container img{
+  width: 85px;
+  margin: auto;
+  display: inline;
+  margin-bottom: 5px;;
+}
+
+.icon-container button{
+  border: 1px solid #0d5e4d;
+}
