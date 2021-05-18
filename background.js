@@ -1,4 +1,14 @@
+// setup default toneData
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.set({ instrument: '' });
-  chrome.storage.sync.set({ instrument: '' });
+  initDefaultToneData();
 });
+
+function initDefaultToneData(){
+  chrome.storage.sync.set({
+    toneData:{ 
+                instrument: "pinano",
+                toneType: "sequence" 
+              }
+    }
+  );
+}

@@ -1,19 +1,19 @@
-
-bindEventToInstrumentElement();
-initToneData();
-
+$( document ).ready(function() {
+  bindEventToInstrumentElement();
+  initToneData();
+});
 function initToneData(){
   chrome.storage.sync.get("toneData", (result) => {
+
     if(!result || !result.toneData)
     {
-      chrome.storage.sync.set({toneData:{}});
-
-      chooseInstrument();
-      chooseToneType();
+      chrome.storage.sync.set({toneData:{}}, ()=>{
+        chooseInstrument(null, ()=>chooseToneType(null));
+      });
     }else{
-      let instrumentButton = document.querySelector(`button.instrument-type[data-instrument=${result.toneData.instrument}]`);
+      let instrumentButton = $(`button.instrument-type[data-instrument=${result.toneData.instrument}]`);
       markCurrentInstrument(instrumentButton);
-      let toneButton = document.querySelector(`input[type=radio][value=${result.toneData.toneType}]`);
+      let toneButton = $(`input[type=radio][value=${result.toneData.toneType}]`);
       markCurrentToneType(toneButton);
     }
   });
@@ -22,69 +22,74 @@ function initToneData(){
 function markCurrentInstrument(instrumentButton){
   let backgroundColor = '#0D5E4D';
   let color = '#fff';
-  instrumentButton.style.backgroundColor = backgroundColor;
-  instrumentButton.style.color = color;
+  $(instrumentButton).css('background-color', backgroundColor);
+  $(instrumentButton).css('color', color);
 }
 
 function markCurrentToneType(toneButton){
-  toneButton.checked = true;
+  $(toneButton).prop("checked", true);
 }
 
 function resetInstrument(){
   chrome.storage.sync.get("toneData", ({toneData}) => {
     toneData['instrument'] = '';
-    chrome.storage.sync.set({ toneData });
+    chrome.storage.sync.set({ toneData }, ()=>{
+      let instruments = $(`.instrument-type`);
 
-    let instruments = document.getElementsByClassName("instrument-type");
-
-    let backgroundColor = '#fff';
-    let color = '#000';
-    for (let index = 0; index < instruments.length; index++) {
-      const instrum = instruments[index];
-      instrum.style.backgroundColor = backgroundColor;
-      instrum.style.color = color;
-    }
+      let backgroundColor = '#fff';
+      let color = '#000';
+      for (let index = 0; index < instruments.length; index++) {
+        const instrum = instruments[index];
+        $(instrum).css('background-color', backgroundColor);
+        $(instrum).css('color', color);
+      }
+    });
   });
 }
 
-function chooseInstrument(instrumentEle){
+function chooseInstrument(instrumentEle, callback){
   chrome.storage.sync.get("toneData", ({toneData}) => {
-    if(!instrumentEle) instrumentEle = document.getElementById("instrument-default")
+    if(!instrumentEle) instrumentEle = $(`#instrument-default`)
     
-    toneData['instrument']=instrumentEle.dataset.instrument;
+    toneData['instrument']=$(instrumentEle).data('instrument');
 
-    chrome.storage.sync.set({ toneData });
-    markCurrentInstrument(instrumentEle);
+    chrome.storage.sync.set({ toneData }, ()=>{
+      markCurrentInstrument(instrumentEle);
+      if(callback) callback();
+    });
   });
 }
 
-function chooseToneType(toneEle){
+function chooseToneType(toneEle, callback){
   chrome.storage.sync.get("toneData", ({toneData}) => {
-    if(!toneEle) toneEle = document.querySelector("input[type=radio][name=tone-type][checked]");
+    if(!toneEle) toneEle = $(`input[type=radio][name=tone-type][checked]`);
     
-    toneData['toneType'] = toneEle.value;
+    toneData['toneType'] = $(toneEle).val();
 
-    chrome.storage.sync.set({ toneData });
-    markCurrentToneType(toneEle);
+    chrome.storage.sync.set({ toneData }, ()=>{
+      markCurrentToneType(toneEle);
+      if(callback) callback();
+    });
+
   });
 }
 
 function bindEventToInstrumentElement(){
-  let instruments = document.getElementsByClassName("instrument-type");
+  let instruments = $(`.instrument-type`);
   for (let index = 0; index < instruments.length; index++) {
     const itm = instruments[index];
     
-    itm.addEventListener("click", async (e) => {
+    $(itm).on("click", (e) => {
       resetInstrument();
       chooseInstrument(itm);
     });
   }
 
-  let toneTypes = document.querySelectorAll("input[type=radio][name=tone-type]");
+  let toneTypes = $(`input[type=radio][name=tone-type]`);
   for (var i = 0; i < toneTypes.length; i++) {
-    toneTypes[i].addEventListener('change', function() {
-      chooseToneType(this);
+    const itm = toneTypes[i];
+    $(itm).on('change', function() {
+      chooseToneType(itm);
     });
   }
-  console.log(toneTypes);
 }

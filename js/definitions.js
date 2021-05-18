@@ -73,7 +73,7 @@ function playChordSeq(name, delay){
 	let now =  Tone.now(); 
 	for	(let i=0; i< keys.length; i++){
 		Tone.loaded().then(() => {
-			Sampler.triggerAttackRelease(keys[i], delay, now + i * 0.25);
+			sampler.triggerAttackRelease(keys[i], delay, now + i * 0.25);
 		})
 	}
 }
